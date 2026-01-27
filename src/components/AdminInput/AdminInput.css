@@ -1,0 +1,37 @@
+.inpForm{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+.inpForm input{
+    width: 80%;
+    height: 40px;
+    outline: none;
+    border-radius: 16px;
+    border: 2px #DAD7CD solid;
+    padding-left: 10px;
+    background-color: #F8F9FA;
+    color: #344E41;
+}
+.inpForm input::placeholder{
+    color: #A3B18A;
+}
+.inpForm button{
+    width: 10%;
+    height: 40px;
+    outline: none;
+    border-radius: 16px;
+    border: 2px #344E41 solid;
+    color: #344E41;
+    margin-left: 20px;
+    font-size: 16px;
+    font-weight: 600;
+    transition: all 0.3s ease-in-out;
+    background-color: #fdfbf7;
+    cursor: pointer;
+}
+.inpForm button:hover{
+    background-color: #344E41;
+    color: #fdfbf7;
+}
