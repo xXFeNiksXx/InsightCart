@@ -5,7 +5,7 @@ function Header() {
   return (
     <header>
         <h3>InsightCart</h3>
-        <a href="#">Bot link</a>
+        <a href="https://t.me/InsightCart_bot">Bot link</a>
     </header>
   )
 }
