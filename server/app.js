@@ -90,7 +90,7 @@ app.post('/addNewItem', async (req, res) => {
     try {
         const itemInfo = await addItem(URL);
         const newItem = await Item.create({ ...itemInfo, follow: false });
-        res.json({ message: 'Data successfully logged', itemInfo: newItem });
+        res.json({ message: 'Data successfully saved', itemInfo: newItem });
     } catch (error) {
         console.error('Error adding item:', error);
         res.status(500).json({ message: 'Error fetching data from URL' });
@@ -193,25 +193,22 @@ app.delete('/deleteItem/:id', async (req, res) => {
 
 // cron
 cron.schedule('0 2 * * *', async () => {
-    console.log('Update started');
     const items = await Item.find();
-    let message = `📊 <b>Щоденне оновлення товарів: </b>\n\n`;
-    if (items.length === 0) {
-        return;
-    } else {
+    if (items.length === 0) return;
+
+    let message = `📊 <b>Щоденне оновлення товарів:</b>\n\n`;
+
     for (const item of items) {
         try {
-            message += `📌 <b>${item.title}\n\n</b>`;
-            message += `💰 ${item.price}\n\n`;
-            if (item.status == true) {
-                message += `🟢 ${item.status}\n\n`;
-            }else{
-                message += `🔴 ${item.status}\n\n`;
-            }
-            message += `🔗 ${item.url}\n\n\n`;
             const newData = await addItem(item.url);
             await Item.updateOne({ _id: item._id }, newData);
-            console.log(`Updated: ${item.title}`);
+            
+            message += `📌 <b>${newData.title}</b>\n`;
+            message += `💰 Ціна: ${newData.price}\n`;
+            message += newData.status ? `🟢 В наявності\n` : `🔴 Немає в наявності\n`;
+            message += `🔗 <a href="${item.url}">Посилання на товар</a>\n\n`;
+
+            console.log(`Updated: ${newData.title}`);
             await new Promise(r => setTimeout(r, 10000));
         } catch (err) {
             console.error(`Failed to update: ${item.url}`);
@@ -221,8 +218,6 @@ cron.schedule('0 2 * * *', async () => {
         parse_mode: 'HTML',
         disable_web_page_preview: true 
     });
-    console.log('Update finished');
-}
 });
 
 // listen
