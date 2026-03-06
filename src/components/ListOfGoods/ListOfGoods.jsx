@@ -17,7 +17,7 @@ export default function ListOfGoods({ refreshGoods }) {
     const [hasMore, setHasMore] = useState(true);
 
     const getGoods = () => {
-        axios.get('/items')
+        axios.get('https://insightcart.onrender.com/items')
             .then(
                 res => setGoods(res.data.reverse())
             )
