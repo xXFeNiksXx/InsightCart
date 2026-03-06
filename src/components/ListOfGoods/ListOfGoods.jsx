@@ -17,7 +17,7 @@ export default function ListOfGoods({ refreshGoods }) {
     const [hasMore, setHasMore] = useState(true);
 
     const getGoods = () => {
-        axios.get('http://localhost:3000/items')
+        axios.get('/items')
             .then(
                 res => setGoods(res.data.reverse())
             )
@@ -35,7 +35,7 @@ export default function ListOfGoods({ refreshGoods }) {
         setIsInitLoad(true);
 
         try {
-            const res = await axios.get(`http://localhost:3000/recomendations/${id}?page=1`);
+            const res = await axios.get(`/recomendations/${id}?page=1`);
             setRec(prev => ({ ...prev, [id]: res.data }));
             if (res.data.length === 0) {
                 setHasMore(false);
@@ -52,7 +52,7 @@ export default function ListOfGoods({ refreshGoods }) {
         const nextPage = curPage + 1;
         
         try {
-            const res = await axios.get(`http://localhost:3000/recomendations/${id}?page=${nextPage}`);
+            const res = await axios.get(`/recomendations/${id}?page=${nextPage}`);
             
             if (res.data.length > 0) {
                 setRec(prev => ({
@@ -81,7 +81,7 @@ export default function ListOfGoods({ refreshGoods }) {
 
     const getUpdate = async (url) => {
         try {
-            await axios.post('http://localhost:3000/updateItem', { url });
+            await axios.post('/updateItem', { url });
             await getGoods();
             showToast('Data successfully updated');
         } catch (err) {
@@ -91,7 +91,7 @@ export default function ListOfGoods({ refreshGoods }) {
 
     const deleteItem = async (id) => {
         try {
-            await axios.delete(`http://localhost:3000/deleteItem/${id}`);
+            await axios.delete(`/deleteItem/${id}`);
             setGoods(prevGoods => prevGoods.filter(item => item._id !== id));
         } catch (err) {
             console.log('Error deleting item:', err);
