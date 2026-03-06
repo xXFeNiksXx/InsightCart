@@ -35,7 +35,7 @@ export default function ListOfGoods({ refreshGoods }) {
         setIsInitLoad(true);
 
         try {
-            const res = await axios.get(`/recomendations/${id}?page=1`);
+            const res = await axios.get(`https://insightcart.onrender.com/recomendations/${id}?page=1`);
             setRec(prev => ({ ...prev, [id]: res.data }));
             if (res.data.length === 0) {
                 setHasMore(false);
@@ -52,7 +52,7 @@ export default function ListOfGoods({ refreshGoods }) {
         const nextPage = curPage + 1;
         
         try {
-            const res = await axios.get(`/recomendations/${id}?page=${nextPage}`);
+            const res = await axios.get(`https://insightcart.onrender.com/recomendations/${id}?page=${nextPage}`);
             
             if (res.data.length > 0) {
                 setRec(prev => ({
@@ -91,7 +91,7 @@ export default function ListOfGoods({ refreshGoods }) {
 
     const deleteItem = async (id) => {
         try {
-            await axios.delete(`/deleteItem/${id}`);
+            await axios.delete(`https://insightcart.onrender.com/deleteItem/${id}`);
             setGoods(prevGoods => prevGoods.filter(item => item._id !== id));
         } catch (err) {
             console.log('Error deleting item:', err);

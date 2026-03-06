@@ -11,7 +11,7 @@ export default function AdminInput({ onAddGood }) {
 
         setIsLoading(true);
         try {
-            const res = await axios.post('/addNewItem', { URL: searchName });
+            const res = await axios.post('https://insightcart.onrender.com/addNewItem', { URL: searchName });
             alert(`Data fetched successfully: ${res.data.message}`);
             onAddGood();
             setSearchName(''); 
